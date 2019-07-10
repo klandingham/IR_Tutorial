@@ -1,0 +1,73 @@
+/**
+ * Blink (platformio tutorial)
+ * 
+ * Turns an LED on for one second,
+ * then off for one second, repeatly.
+ */
+#include <Arduino.h>
+#include <IRremote.h>
+
+// Set LED_BUILTIN if it is not defined by Arduino setup
+// #define LED_BUILTIN 13
+#define BLUE_LED_PIN 2
+
+int loopCounter;
+boolean testState;
+
+void testLoopCount() {
+  if (loopCounter > 5) {
+    testState = !testState;
+    digitalWrite(2, testState);
+    loopCounter = 0;
+  }
+}
+
+void setup() {
+  // initialize LED digital pin as an output
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(BLUE_LED_PIN, OUTPUT);
+  digitalWrite(BLUE_LED_PIN, HIGH); // normal state is on
+  Serial.begin(9600);
+  loopCounter = 0;
+  testState = 0x0;
+}
+
+void loop_test02() {
+  // turn off the blue LED periodically, but leave it on most of the time
+  // this is to make sure setting the pin LOW is turning off the blue LED
+  delay(500L);
+  loopCounter++;
+  if (loopCounter > 5) {
+    digitalWrite(BLUE_LED_PIN, LOW);
+    loopCounter = 0;
+  }
+  else {
+    digitalWrite(BLUE_LED_PIN, HIGH);
+  }
+}
+
+void loop_test01() {
+  // turn the LED on (HIGH is the voltage level)
+  digitalWrite(LED_BUILTIN, HIGH);
+  for (int i = 0; i < 50; i++) {
+    Serial.print("tic ");
+  }
+  // wait for a second
+  delay(1000);
+  loopCounter++;
+  testLoopCount();
+  // turn the LED off by making the voltage LOW
+  digitalWrite(LED_BUILTIN, LOW);
+  for (int i = 0; i < 50; i++) {
+    Serial.print("tic ");
+  }
+  // wait for a second
+  delay(1000);
+  loopCounter++;
+  testLoopCount();
+}
+
+void loop() {
+  // loop_test01();
+  loop_test01();
+}
