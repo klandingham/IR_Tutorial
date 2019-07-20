@@ -3,6 +3,7 @@
 
 // define sensor pin
 const int RECV_PIN = 4;
+const int DUMMY_VALUE = 5; // KIP: Added to test rebuild, delete when done
 
 // define LED pins
 const int redPin = 8;
