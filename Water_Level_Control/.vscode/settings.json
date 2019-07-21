@@ -1,6 +1,6 @@
 {
-    "terminal.integrated.env.windows": {
-        "PATH": "C:\\Users\\kip\\.platformio\\penv\\Scripts;C:\\Users\\kip\\.platformio\\penv;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;D:\\Python36\\Scripts\\;D:\\Python36\\;C:\\ProgramData\\Oracle\\Java\\javapath;D:\\Program Files (x86)\\GnuWin32\\bin;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\Program Files\\ATI Technologies\\ATI.ACE\\Core-Static;D:\\Program Files\\Microsoft Network Monitor 3\\;D:\\Program Files\\Git\\cmd;D:\\Program Files\\Git\\mingw64\\bin;D:\\Program Files\\Git\\usr\\bin;D:\\Program Files (x86)\\Fiddler;D:\\Tool\\Fiddler;D:\\Tools\\Microsoft VS Code\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;D:\\Python36\\Scripts\\;D:\\Python36\\;C:\\ProgramData\\Oracle\\Java\\javapath;D:\\Program Files (x86)\\GnuWin32\\bin;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\Program Files\\ATI Technologies\\ATI.ACE\\Core-Static;D:\\Program Files\\Microsoft Network Monitor 3\\;D:\\Program Files\\Git\\cmd;D:\\Program Files\\Git\\mingw64\\bin;D:\\Program Files\\Git\\usr\\bin;D:\\Program Files (x86)\\Fiddler;D:\\Tool\\Fiddler;D:\\Tools\\Microsoft VS Code\\bin",
+    "terminal.integrated.env.linux": {
+        "PATH": "/home/kip/.platformio/penv/bin:/home/kip/.platformio/penv:/home/kip/bin:/home/kip/bin:/home/kip/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
         "PLATFORMIO_CALLER": "vscode"
     }
 }
