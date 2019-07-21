@@ -14,15 +14,28 @@
  * Note: values for the relay control pin assume a driver transistor in the circuit (emitter
  * follower) to take load off output pin, so value is inverted.
  * 
- * TODO: Right now I have fixed values for the hi/lo limits. I'd like to use small pots
- * to be able to adjust those in-place.
- * 
  * TODO: I still need to design and print a mount for the sensor!
+ * TODO: Save circuit in Fritzing.
  */
 #include <Arduino.h>
 #include <HCSR04.h>
 
-// dug
+// #define DEBUG 1
+
+// Water level adjustment ranges in centimeters
+#define MAX_HIGH_WATER_LEVEL 2
+#define MIN_HIGH_WATER_LEVEL 10
+#define MAX_LOW_WATER_LEVEL 10
+#define MIN_LOW_WATER_LEVEL 35
+
+// Water level adjustment
+const int loPotPin = A0;
+const int hiPotPin = A1;
+long readLoVal;
+long readHiVal;
+long highWaterLimit;
+long lowWaterLimit;
+
 const int RELAY_PIN = 10;
 const float hiLimit = 15.0f;
 const float loLimit = 5.0f;
@@ -31,11 +44,14 @@ UltraSonicDistanceSensor distanceSensor(13, 12);  // initialize a sensor on digi
 float distance;
 
 void checkDistance();
+void readLimits();
 void relayTestLoop();
 void sensorTestLoop();
 
 void setup() {
+#ifdef DEBUG
   Serial.begin(9600);
+#endif
   // pinMode(LED_BUILTIN, OUTPUT);
   pinMode(RELAY_PIN, OUTPUT);     // Note: relay board pin is active low
   digitalWrite(RELAY_PIN, LOW);  // turn off relay initially
@@ -47,9 +63,9 @@ void checkDistance() {
    */
   if (distance < 0.0)
     digitalWrite(RELAY_PIN, LOW);   // distance out of range, turn off pump
-  else if (distance <= loLimit)
+  else if (distance <= highWaterLimit)
     digitalWrite(RELAY_PIN, HIGH);  // water too high, turn on pump
-  else if (distance >= hiLimit)
+  else if (distance >= lowWaterLimit)
     digitalWrite(RELAY_PIN, LOW);   // water low enough, turn off pump
 }
 
@@ -58,10 +74,29 @@ void loop() {
   // relayTestLoop();
 }
 
+/**
+ * Reads high and low water level limits from the adjustment pots.
+ */
+void readLimits() {
+  readLoVal = analogRead(loPotPin);
+  highWaterLimit = map(readLoVal, 0L, 4095L, MAX_HIGH_WATER_LEVEL, MIN_HIGH_WATER_LEVEL);
+  readHiVal = analogRead(hiPotPin);
+  lowWaterLimit = map(readHiVal, 0L, 4095L, MAX_LOW_WATER_LEVEL, MIN_LOW_WATER_LEVEL);
+#ifdef DEBUG
+  Serial.print("High limit: ");
+  Serial.print(highWaterLimit);
+  Serial.print("\tLow limit: ");
+  Serial.print(lowWaterLimit);
+#endif
+}
+
 void sensorTestLoop() {
+  readLimits();
   // Every 500 milliseconds, do a measurement using the sensor and print the distance in centimeters.
   distance = distanceSensor.measureDistanceCm();
+#ifdef DEBUG
   Serial.println(distance);
+#endif
   checkDistance();
   delay(1000);
 }
